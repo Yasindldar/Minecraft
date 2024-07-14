@@ -28,22 +28,49 @@ library.flags = {}
 
 local services = setmetatable({}, {
     __index = function(t, k)
-        return game:GetService(k) -- corrected function call
+        local service = game:GetService(k)
+        print("Service retrieved: ", k, service)
+        return service
     end
 })
 
 local mouse = services.Players.LocalPlayer:GetMouse()
+print("Mouse retrieved: ", mouse)
 
 function Tween(obj, t, data)
-    if not obj or not t or not data then
-        print("Nil value found in Tween arguments:", obj, t, data)
+    if not obj then
+        print("Nil obj in Tween")
         return false
     end
+    if not t then
+        print("Nil t in Tween")
+        return false
+    end
+    if not data then
+        print("Nil data in Tween")
+        return false
+    end
+    print("Tweening: ", obj, t, data)
     services.TweenService:Create(obj, TweenInfo.new(t[1], Enum.EasingStyle[t[2]], Enum.EasingDirection[t[3]]), data):Play()
     return true
 end
 
 local toggled = false
+
+-- # Switch Tabs # --
+local switchingTabs = false
+function switchTab(new)
+    if switchingTabs then
+        print("Already switching tabs")
+        return
+    end
+    local old = library.currentTab
+    print("Switching tab from ", old, " to ", new)
+    library.currentTab = new
+    -- additional logic for switching tabs if needed
+end
+
+--#endregion
   
   -- # Switch Tabs # --
   local switchingTabs = false
