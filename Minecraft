@@ -1,47 +1,49 @@
 --#region UI CODE
 
- --#region gay
- getgenv().gay = true
+--#region gay
+getgenv().gay = true
 
-if game.Players.localPlayer:IsInGroup(15617096) then
-     getgenv().gay = true
- else
-     getgenv().gay = false
- end
- 
-  --[[local allowedUserIds = {
-     "1478927429", -- messilt2
-     "5127300326", -- messilt2 brother
-  }
- 
-  
-  if table.find(allowedUserIds, tostring(game.Players.LocalPlayer.UserId)) then
-      getgenv().gay = true
-  end--]]
- 
-  --#endregion @Bytopp: ▦ but no likes
-  
- 
-  --#region library
-  local library = {}
-  local ToggleUI = false
-  library.currentTab = nil
-  library.flags = {}
-  
-  local services = setmetatable({}, {
+if game.Players.LocalPlayer:IsInGroup(15617096) then
+    getgenv().gay = true
+else
+    getgenv().gay = false
+end
+
+--[[local allowedUserIds = {
+    "1478927429", -- messilt2
+    "5127300326", -- messilt2 brother
+}
+
+if table.find(allowedUserIds, tostring(game.Players.LocalPlayer.UserId)) then
+    getgenv().gay = true
+end--]]
+
+--#endregion @Bytopp: ▦ but no likes
+
+--#region library
+local library = {}
+local ToggleUI = false
+library.currentTab = nil
+library.flags = {}
+
+local services = setmetatable({}, {
     __index = function(t, k)
-    return game.GetService(game, k)
-  end
-  })
-  
-  local mouse = services.Players.LocalPlayer:GetMouse()
-  
-  function Tween(obj, t, data)
-  services.TweenService:Create(obj, TweenInfo.new(t[1], Enum.EasingStyle[t[2]], Enum.EasingDirection[t[3]]), data):Play()
-  return true
-  end
-  
-  local toggled = false
+        return game:GetService(k) -- corrected function call
+    end
+})
+
+local mouse = services.Players.LocalPlayer:GetMouse()
+
+function Tween(obj, t, data)
+    if not obj or not t or not data then
+        print("Nil value found in Tween arguments:", obj, t, data)
+        return false
+    end
+    services.TweenService:Create(obj, TweenInfo.new(t[1], Enum.EasingStyle[t[2]], Enum.EasingDirection[t[3]]), data):Play()
+    return true
+end
+
+local toggled = false
   
   -- # Switch Tabs # --
   local switchingTabs = false
